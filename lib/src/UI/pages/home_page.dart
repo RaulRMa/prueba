@@ -5,17 +5,11 @@ import 'package:prueba/src/UI/constants.dart';
 import '../../Backend/BaseDatos.dart';
 import '../../Backend/Producto_model.dart';
 
-cargaProducto() async {
-  List<Producto> productos = await Backend.productos();
-  print("Base de datos cargada!!");
-}
-
 class HomePage extends StatelessWidget {
   final estiloTexto = new TextStyle(fontSize: 25);
   final icon_path = 'lib/src/assets/icons/';
   @override
   Widget build(BuildContext context) {
-    cargaProducto();
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(

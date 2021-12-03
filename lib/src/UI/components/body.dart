@@ -3,6 +3,7 @@ import 'package:prueba/src/UI/constants.dart';
 import 'categorias.dart';
 import '../../Backend/BaseDatos.dart';
 import '../../Backend/Producto_model.dart';
+import 'item_producto.dart';
 
 class Body extends StatelessWidget {
   var lista_productos = null;
@@ -43,13 +44,25 @@ class Body extends StatelessWidget {
                 // if we got our data
               } else if (snapshot.hasData) {
                 List<Producto>? productos = snapshot.data;
-                String unProducto = productos![0].name;
-                return Center(
-                  child: Text(
-                    '$unProducto',
-                    style: TextStyle(fontSize: 18),
+                return Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    child: GridView.builder(
+                      itemCount: productos!.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: kDefaultPadding,
+                        crossAxisSpacing: kDefaultPadding,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemBuilder: (context, index) =>
+                          ItemProducto(producto_item: productos[index]),
+                    ),
                   ),
                 );
+                // return ItemProducto(
+                //     nombre_producto: unProducto.name, precio: unProducto.price);
               }
             }
             return Center(
@@ -57,39 +70,6 @@ class Body extends StatelessWidget {
             );
           },
         ),
-      ],
-    );
-  }
-}
-
-class ItemProducto extends StatelessWidget {
-  const ItemProducto() : super();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(kDefaultPadding),
-          height: 100,
-          width: 160,
-          decoration: BoxDecoration(
-            color: productColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
-          child: Text(
-            "Un título chido",
-            style: TextStyle(color: kTextColor),
-          ),
-        ),
-        Text(
-          "\$234",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )
       ],
     );
   }
