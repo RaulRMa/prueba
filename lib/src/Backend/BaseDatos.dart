@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:path/path.dart';
@@ -42,10 +44,10 @@ class Backend {
 
     return List.generate(productosMap.length, (i) {
       return Producto(
-        id: productosMap[i]["Id"],
-        name: productosMap[i]["nombre"],
-        price: productosMap[i]["precio"],
-      );
+          id: productosMap[i]["Id"],
+          name: productosMap[i]["nombre"],
+          price: productosMap[i]["precio"],
+          image: productosMap[i]["imagen"]);
     });
   }
 }

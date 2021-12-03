@@ -47,7 +47,7 @@ class _CategoriaState extends State<Categoria> {
                         selectedIndex == index ? kTextColor : kTextLightColor,
                   )),
               Container(
-                margin: EdgeInsets.only(top: kDefaultPadding / 4),
+                margin: const EdgeInsets.only(top: kDefaultPadding / 4),
                 height: 2,
                 width: 30,
                 color:

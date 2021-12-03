@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:prueba/src/UI/constants.dart';
+import 'package:prueba/src/UI/detalles/components/pantalla_detalles.dart';
 import 'categorias.dart';
 import '../../Backend/BaseDatos.dart';
 import '../../Backend/Producto_model.dart';
 import 'item_producto.dart';
 
 class Body extends StatelessWidget {
-  var lista_productos = null;
-
-  get_productos() async {
-    lista_productos = await Backend.productos();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +22,7 @@ class Body extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        Categoria(),
+        const Categoria(),
         FutureBuilder<List<Producto>>(
           future: Backend.productos(),
           builder: (context, snapshot) {
@@ -50,14 +45,21 @@ class Body extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                     child: GridView.builder(
                       itemCount: productos!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: kDefaultPadding,
                         crossAxisSpacing: kDefaultPadding,
                         childAspectRatio: 0.75,
                       ),
-                      itemBuilder: (context, index) =>
-                          ItemProducto(producto_item: productos[index]),
+                      itemBuilder: (context, index) => ItemProducto(
+                        producto_item: productos[index],
+                        presionado: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PantallaDetalles(
+                                    producto: productos[index]))),
+                      ),
                     ),
                   ),
                 );
@@ -65,7 +67,7 @@ class Body extends StatelessWidget {
                 //     nombre_producto: unProducto.name, precio: unProducto.price);
               }
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           },
