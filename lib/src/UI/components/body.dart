@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:prueba/src/UI/constants.dart';
+import 'categorias.dart';
+import '../../Backend/BaseDatos.dart';
+import '../../Backend/Producto_model.dart';
 
 class Body extends StatelessWidget {
+  var lista_productos = null;
+
+  get_productos() async {
+    lista_productos = await Backend.productos();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,65 +27,70 @@ class Body extends StatelessWidget {
           ),
         ),
         Categoria(),
+        FutureBuilder<List<Producto>>(
+          future: Backend.productos(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              // If we got an error
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occured',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+
+                // if we got our data
+              } else if (snapshot.hasData) {
+                List<Producto>? productos = snapshot.data;
+                String unProducto = productos![0].name;
+                return Center(
+                  child: Text(
+                    '$unProducto',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+              }
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ],
     );
   }
 }
 
-//Senecesita un componente con estado para las categorías
-class Categoria extends StatefulWidget {
-  const Categoria({Key? key}) : super(key: key);
-
-  @override
-  _CategoriaState createState() => _CategoriaState();
-}
-
-class _CategoriaState extends State<Categoria> {
-  List<String> categorias = ["Botas", "Mocasin", "Tenis", 'Sandalias'];
-  int selectedIndex = 0;
+class ItemProducto extends StatelessWidget {
+  const ItemProducto() : super();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
-      child: SizedBox(
-        height: 25,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categorias.length,
-          itemBuilder: (context, index) => buildCategory(index),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(kDefaultPadding),
+          height: 100,
+          width: 160,
+          decoration: BoxDecoration(
+            color: productColor,
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget buildCategory(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(categorias[index],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color:
-                        selectedIndex == index ? kTextColor : kTextLightColor,
-                  )),
-              Container(
-                margin: EdgeInsets.only(top: kDefaultPadding / 4),
-                height: 2,
-                width: 30,
-                color:
-                    selectedIndex == index ? Colors.black : Colors.transparent,
-              )
-            ]),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
+          child: Text(
+            "Un título chido",
+            style: TextStyle(color: kTextColor),
+          ),
+        ),
+        Text(
+          "\$234",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )
+      ],
     );
   }
 }
