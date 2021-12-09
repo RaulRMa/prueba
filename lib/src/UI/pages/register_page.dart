@@ -27,7 +27,7 @@ class Registrar extends StatelessWidget {
             ),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
+            /*Container(
                 padding: EdgeInsets.only(top: 20),
                 child: ButtonTheme(
                   minWidth: 300.0,
@@ -36,7 +36,7 @@ class Registrar extends StatelessWidget {
                     textColor: Colors.blueGrey,
                     child: Text('Registrar'),
                     onPressed: () {
-                      //Navigator.pushNamed(context, '/Registrar');
+                      Navigator.pushNamed(context, '/Catalogo');
                     },
                     shape: RoundedRectangleBorder(
                         side: BorderSide(
@@ -45,7 +45,29 @@ class Registrar extends StatelessWidget {
                             style: BorderStyle.solid),
                         borderRadius: BorderRadius.circular(20)),
                   ),
-                )),
+                )),*/
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/Catalogo'),
+              child: Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: ButtonTheme(
+                    minWidth: 300.0,
+                    child: RaisedButton(
+                      color: Colors.white,
+                      textColor: Colors.blueGrey,
+                      child: Text('Registrar'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/Catalogo');
+                      },
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                              color: Colors.redAccent,
+                              width: 1,
+                              style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  )),
+            )
           ]),
         ],
       ),
