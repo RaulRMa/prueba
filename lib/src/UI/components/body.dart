@@ -23,8 +23,8 @@ class Body extends StatelessWidget {
           ),
         ),
         const Categoria(),
-        FutureBuilder<List<Producto>>(
-          future: Backend.productos(),
+        FutureBuilder<List<String>?>(
+          future: Backend.imagenes(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               // If we got an error
@@ -38,7 +38,7 @@ class Body extends StatelessWidget {
 
                 // if we got our data
               } else if (snapshot.hasData) {
-                List<Producto>? productos = snapshot.data;
+                List<String>? productos = snapshot.data;
                 return Expanded(
                   child: Padding(
                     padding:
@@ -52,13 +52,8 @@ class Body extends StatelessWidget {
                         crossAxisSpacing: kDefaultPadding,
                         childAspectRatio: 0.75,
                       ),
-                      itemBuilder: (context, index) => ItemProducto(
-                        producto_item: productos[index],
-                        presionado: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PantallaDetalles(
-                                    producto: productos[index]))),
+                      itemBuilder: (context, index) => Center(
+                        child: CircularProgressIndicator(),
                       ),
                     ),
                   ),
