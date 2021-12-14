@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
           ),
         ),
         const Categoria(),
-        FutureBuilder<List<Producto>>(
+        FutureBuilder<List<Producto>?>(
           future: Backend.productos(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -38,33 +38,42 @@ class Body extends StatelessWidget {
 
                 // if we got our data
               } else if (snapshot.hasData) {
+                print("Si hay datos, banda!");
                 List<Producto>? productos = snapshot.data;
-                return Expanded(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: GridView.builder(
-                      itemCount: productos!.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: kDefaultPadding,
-                        crossAxisSpacing: kDefaultPadding,
-                        childAspectRatio: 0.75,
-                      ),
-                      itemBuilder: (context, index) => ItemProducto(
-                        producto_item: productos[index],
-                        presionado: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PantallaDetalles(
-                                    producto: productos[index]))),
+                if (productos!.isNotEmpty) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: kDefaultPadding),
+                      child: GridView.builder(
+                        itemCount: productos!.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: kDefaultPadding,
+                          crossAxisSpacing: kDefaultPadding,
+                          childAspectRatio: 0.75,
+                        ),
+                        itemBuilder: (context, index) => ItemProducto(
+                          producto_item: productos[index],
+                          presionado: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PantallaDetalles(
+                                      producto: productos[index]))),
+                        ),
                       ),
                     ),
-                  ),
-                );
-                // return ItemProducto(
-                //     nombre_producto: unProducto.name, precio: unProducto.price);
+                  );
+                } else {
+                  return const Center(
+                    child: Text(
+                      "Aún no hay productos en el inventario",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  );
+                }
               }
             }
             return const Center(

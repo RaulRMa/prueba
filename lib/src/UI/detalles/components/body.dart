@@ -36,7 +36,7 @@ class Body extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        producto.name,
+                        producto.nombre,
                         style: Theme.of(context).textTheme.headline4!.copyWith(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -46,7 +46,7 @@ class Body extends StatelessWidget {
                               text: TextSpan(children: [
                             TextSpan(text: "Precio\n"),
                             TextSpan(
-                                text: "\$${producto.price}",
+                                text: "\$${producto.precio}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline4!
@@ -58,8 +58,8 @@ class Body extends StatelessWidget {
                             width: kDefaultPadding,
                           ),
                           Expanded(
-                            child: Image.memory(
-                              producto.image,
+                            child: Image.network(
+                              producto.imagen,
                               fit: BoxFit.fill,
                             ),
                           )

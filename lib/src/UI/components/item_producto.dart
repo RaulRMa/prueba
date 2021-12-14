@@ -26,19 +26,19 @@ class ItemProducto extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Hero(
-                  tag: producto_item.id,
-                  child: Image.memory(producto_item.image),
+                  tag: Object(),
+                  child: Image.network(producto_item.imagen),
                 )),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
             child: Text(
-              producto_item.name,
+              producto_item.nombre,
               style: const TextStyle(color: kTextColor),
             ),
           ),
           Text(
-            "\$ ${producto_item.price} ",
+            "\$ ${producto_item.precio} ",
             style: const TextStyle(fontWeight: FontWeight.bold),
           )
         ],

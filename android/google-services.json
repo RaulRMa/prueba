@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "936632859314",
+    "firebase_url": "https://zapatos-fa365-default-rtdb.firebaseio.com",
+    "project_id": "zapatos-fa365",
+    "storage_bucket": "zapatos-fa365.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936632859314:android:1c0646459a99beaa74a7ab",
+        "android_client_info": {
+          "package_name": "com.example.prueba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936632859314-air5dlo24p7673hn51p3svarkmj3toff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbUT1q5tkOFol4xNlAPnHIt07mOivLh_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936632859314-air5dlo24p7673hn51p3svarkmj3toff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

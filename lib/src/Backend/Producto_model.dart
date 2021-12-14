@@ -3,24 +3,26 @@
 import 'dart:typed_data';
 
 class Producto {
-  final int id;
-  final String name;
-  final int price;
-  final Uint8List image;
+  int? id;
+  final String nombre;
+  final int precio;
+  final String imagen;
+  final String descripcion;
 
-  Producto({
-    required int this.id,
-    required String this.name,
-    required int this.price,
-    required Uint8List this.image,
-  });
+  Producto(
+      {int? this.id,
+      required String this.nombre,
+      required int this.precio,
+      required String this.imagen,
+      required String this.descripcion});
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'name': this.name,
-      'price': this.price,
-      'imagen': this.image,
+      'id': id,
+      'nombre': nombre,
+      'precio': precio,
+      'imagen': imagen,
+      'descripcion': descripcion,
     };
   }
 }

@@ -10,7 +10,7 @@ class Categoria extends StatefulWidget {
 }
 
 class _CategoriaState extends State<Categoria> {
-  List<String> categorias = ["Botas", "Mocasin", "Tenis", 'Sandalias'];
+  List<String> categorias = ["Inventario", "Eliminar", "Tenis", 'Sandalias'];
   int selectedIndex = 0;
 
   @override
@@ -34,6 +34,9 @@ class _CategoriaState extends State<Categoria> {
         setState(() {
           selectedIndex = index;
         });
+        if (selectedIndex == 1) {
+          Navigator.pushNamed(context, '/eliminarProd');
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),

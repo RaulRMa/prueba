@@ -1,6 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors, file_names
 
 import 'package:flutter/material.dart';
+import 'package:prueba/src/UI/pages/add_product.dart';
+import 'package:prueba/src/UI/pages/elimina_zapatos.dart';
 import 'package:prueba/src/UI/pages/home_page.dart';
 import 'package:prueba/src/UI/pages/login_page.dart';
 import 'package:prueba/src/UI/pages/register_page.dart';
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const FirstHome(title: appTitle),
         '/Login': (context) => Login(),
         '/Registrar': (context) => Registrar(),
+        '/catalogo': (context) => HomePage(),
+        '/registrarProd': (context) => RegistraProducto(),
+        '/eliminarProd': (context) => EliminaZapatos(),
         //'/Administrar': (context) => Administrar(),
       },
     );

@@ -29,6 +29,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  equatable: ^1.2.3
+  firebase_auth: ^0.18.0+1
+  firebase_core: ^0.5.0
+  google_sign_in: ^4.5.4
+  meta: ^1.1.0
+  fluttertoast: ^8.0.8
 
 
 
@@ -68,7 +75,6 @@ flutter:
   assets:
     - lib/src/assets/
     - lib/src/assets/icons/
-    - lib/src/Backend/productos.db
     - lib/src/assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:prueba/src/UI/components/body.dart';
 import 'package:prueba/src/UI/constants.dart';
+import 'package:prueba/src/UI/pages/add_product.dart';
 
 class HomePage extends StatelessWidget {
   final estiloTexto = const TextStyle(fontSize: 25);
@@ -36,7 +37,8 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          print('Hola mundo!!');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RegistraProducto()));
         },
       ),
     );
