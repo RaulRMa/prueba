@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prueba/src/UI/constants.dart';
 
 class FirstHome extends StatefulWidget {
   final String title;
@@ -21,7 +22,10 @@ class _MyHomePageState extends State<FirstHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white60),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: Column(
         children: <Widget>[
           Image.asset('lib/src/assets/images/Logo.png',

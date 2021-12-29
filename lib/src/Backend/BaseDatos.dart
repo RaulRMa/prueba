@@ -11,8 +11,8 @@ import 'dart:async';
 
 class Backend {
   static Future<Database> _openDB() async {
-    //var databasesPath = await getDatabasesPath();
-    var path = "lib/src/Backend/productos.db";
+    var databasesPath = await getDatabasesPath();
+    var path = join(databasesPath, "lib/src/Backend/productos.db");
     var exists = await databaseExists(path);
 
     if (!exists) {
@@ -71,15 +71,19 @@ class Backend {
     }
   }
 
-  static Future<List<Usuario>> getUsuarios() async {
+  static Future<List<Usuario>?> getUsuarios() async {
     Database db = await _openDB();
-    final List<Map<String, dynamic>> usuariosMap = await db.query("Usuarios2");
-
-    return List.generate(usuariosMap.length, (i) {
-      return Usuario(
-          email: usuariosMap[i]["email"],
-          contrasena: usuariosMap[i]["contrasena"]);
-    });
+    try {
+      final List<Map<String, dynamic>> usuariosMap =
+          await db.query("Usuarios2");
+      return List.generate(usuariosMap.length, (i) {
+        return Usuario(
+            email: usuariosMap[i]["email"],
+            contrasena: usuariosMap[i]["contrasena"]);
+      });
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<int> delete(Producto prod) async {
