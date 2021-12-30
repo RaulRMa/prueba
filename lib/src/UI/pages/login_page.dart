@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 Widget TextoRedondo(var texto) {
   return Container(
     //width: 200,
-    padding: EdgeInsets.only(top: 30),
+    padding: const EdgeInsets.only(top: 30),
     child: TextField(
       decoration: InputDecoration(
           hintText: texto,
           isDense: true,
-          contentPadding: EdgeInsets.all(8),
-          border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(28.0),
-            borderSide: new BorderSide(),
+          contentPadding: const EdgeInsets.all(8),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(28.0),
+            borderSide: const BorderSide(),
           )),
     ),
   );
@@ -39,18 +39,18 @@ class Login extends StatelessWidget {
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: ButtonTheme(
                   minWidth: 300.0,
                   child: RaisedButton(
                     color: Colors.white,
                     textColor: Colors.blueGrey,
-                    child: Text('Ingresar'),
+                    child: const Text('Ingresar'),
                     onPressed: () {
                       Navigator.pushNamed(context, '/Catalogo');
                     },
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(
+                        side: const BorderSide(
                             color: Colors.redAccent,
                             width: 1,
                             style: BorderStyle.solid),

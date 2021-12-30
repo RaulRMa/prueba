@@ -39,7 +39,7 @@ class Registrar extends StatelessWidget {
                           return Center(
                             child: Text(
                               '${snapshot.error} occured',
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           );
                         } else if (snapshot.hasData) {
@@ -85,7 +85,7 @@ class Registrar extends StatelessWidget {
             GestureDetector(
               onTap: () => submit(context),
               child: Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 color: Colors.white,
                 child: const Center(
                   child: Text('Registrar'),
@@ -108,10 +108,10 @@ Widget TextoRedondo(var texto, TextEditingController controlador) {
       decoration: InputDecoration(
           hintText: texto,
           isDense: true,
-          contentPadding: EdgeInsets.all(8),
-          border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(28.0),
-            borderSide: new BorderSide(),
+          contentPadding: const EdgeInsets.all(8),
+          border:  OutlineInputBorder(
+            borderRadius: BorderRadius.circular(28.0),
+            borderSide: const BorderSide(),
           )),
     ),
   );
