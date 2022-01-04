@@ -47,10 +47,10 @@ class Login extends StatelessWidget {
                     textColor: Colors.blueGrey,
                     child: Text('Ingresar'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/Catalogo');
+                      Navigator.pushNamed(context, '/catalogo');
                     },
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(
+                        side: const BorderSide(
                             color: Colors.redAccent,
                             width: 1,
                             style: BorderStyle.solid),

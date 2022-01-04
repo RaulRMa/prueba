@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:prueba/src/Backend/BaseDatos.dart';
 import 'package:prueba/src/Backend/usuario_model.dart';
+import 'package:prueba/src/UI/components/inputs.dart';
 import 'package:prueba/src/UI/pages/home_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -9,110 +12,134 @@ class Registrar extends StatelessWidget {
   final contrasena = TextEditingController();
   final contrasena2 = TextEditingController();
 
-  submit(context) async {
-    if (email.text == "" || contrasena.text == "" || contrasena2.text == "") {
-      print("Debe llenar todos los campos");
-      // try {
-      //   Fluttertoast.showToast(
-      //       msg: "Debe llenar todos los campos",
-      //       toastLength: Toast.LENGTH_SHORT,
-      //       gravity: ToastGravity.CENTER,
-      //       backgroundColor: Colors.red,
-      //       textColor: Colors.white,
-      //       fontSize: 16.0);
-      // } catch (e) {
-      //   print(e);
-      // }
-    } else if (contrasena.text != contrasena2.text) {
-      print("${email.text}, ${contrasena.text}");
-    } else {
-      Usuario user = Usuario(email: email.text, contrasena: contrasena.text);
-      //int respuesta = await ;
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => FutureBuilder(
-                    future: Backend.inserta_usuario(user),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                              '${snapshot.error} occured',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          );
-                        } else if (snapshot.hasData) {
-                          print("Cambiando de pantalla");
-                          Backend.getUsuarios();
-                          return HomePage();
-                        }
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+  void alert(BuildContext context, String mensaje, String titulo, bool error) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          elevation: 5,
+          title: Text(titulo),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              error ? const Icon(Icons.error) : const Icon(Icons.done),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(mensaje),
+            ],
+          ),
+          actions: [
+            error
+                ? TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('ok',
+                        style: TextStyle(
+                          color: Colors.red,
+                        )))
+                : TextButton(
+                    onPressed: () {
+                      Navigator.popAndPushNamed(context, '/catalogo');
                     },
-                  )));
-    }
+                    child: const Text('ok',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ))),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
+    final TextEditingController pass1 = TextEditingController();
+    final TextEditingController pass2 = TextEditingController();
+
+    final Map<String, String> formValues = {
+      'email': 'unEmail@algo.com',
+      'password': 'unPasword1234',
+    };
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Registra tus datos'),
+        title: const Text('Registra tus datos'),
         backgroundColor: Colors.white60,
       ),
-      body: Column(
-        children: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Expanded(
-              child: TextoRedondo('E-mail', email),
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Expanded(
-              child: TextoRedondo('Contraseña', contrasena),
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Expanded(
-              child: TextoRedondo('Repita su contraseña', contrasena2),
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            GestureDetector(
-              onTap: () => submit(context),
-              child: Container(
-                padding: EdgeInsets.only(top: 20),
-                color: Colors.white,
-                child: const Center(
-                  child: Text('Registrar'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: Form(
+            key: myFormKey,
+            child: Column(
+              children: <Widget>[
+                InputForm(
+                  hintText: 'E-mail',
+                  formValues: formValues,
+                  formProperty: 'email',
+                  inputType: TextInputType.emailAddress,
                 ),
-              ),
+                const SizedBox(
+                  height: 30,
+                ),
+                InputForm(
+                  hintText: 'Contraseña',
+                  isPassword: true,
+                  formProperty: 'password',
+                  formValues: formValues,
+                  controller: pass1,
+                  rePassword: pass2.text,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                InputForm(
+                    hintText: 'Repita su contraseña',
+                    isPassword: true,
+                    formProperty: '',
+                    formValues: null,
+                    controller: pass2,
+                    rePassword: pass1.text),
+                const SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    //* Minimiza el teclado al hacer click en registrar
+                    FocusScope.of(context).requestFocus(FocusScopeNode());
+                    //* Valida los campos
+                    if (!myFormKey.currentState!.validate()) return;
+                    Usuario usuario = Usuario(
+                        email: formValues['email'],
+                        contrasena: formValues['password']);
+
+                    //* Intenta guardar en la base de datos a los nuevos usuarios
+                    int respuesta = await Backend.inserta_usuario(usuario);
+                    if (respuesta == 0) {
+                      alert(context, 'Hubo un error al registrarse', 'Error',
+                          true);
+                    } else {
+                      alert(context, 'Usuario registrado con éxito', 'Correcto',
+                          false);
+                    }
+                  },
+                  child: const SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text('Registrar'),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ]),
-        ],
+          ),
+        ),
       ),
     );
   }
-}
-
-Widget TextoRedondo(var texto, TextEditingController controlador) {
-  return Container(
-    //width: 200,
-    padding: EdgeInsets.only(top: 30),
-    child: TextField(
-      controller: controlador,
-      decoration: InputDecoration(
-          hintText: texto,
-          isDense: true,
-          contentPadding: EdgeInsets.all(8),
-          border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(28.0),
-            borderSide: new BorderSide(),
-          )),
-    ),
-  );
 }
