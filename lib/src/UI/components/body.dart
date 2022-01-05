@@ -34,11 +34,16 @@ class Body extends StatelessWidget {
   }
 }
 
-class Catalogo extends StatelessWidget {
+class Catalogo extends StatefulWidget {
   const Catalogo({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<Catalogo> createState() => _CatalogoState();
+}
+
+class _CatalogoState extends State<Catalogo> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Producto>?>(
@@ -50,7 +55,7 @@ class Catalogo extends StatelessWidget {
             return Center(
               child: Text(
                 '${snapshot.error} occured',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             );
 
@@ -73,11 +78,13 @@ class Catalogo extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) => ItemProducto(
                       producto_item: productos[index],
-                      presionado: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PantallaDetalles(
-                                  producto: productos[index]))),
+                      presionado: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PantallaDetalles(
+                                    producto: productos[index])));
+                      },
                     ),
                   ),
                 ),

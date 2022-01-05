@@ -10,7 +10,7 @@ class Categoria extends StatefulWidget {
 }
 
 class _CategoriaState extends State<Categoria> {
-  List<String> categorias = ["Inventario", "Eliminar", "Tenis", 'Sandalias'];
+  List<String> categorias = ["Inventario", "Usuarios"];
   int selectedIndex = 0;
 
   @override
@@ -35,7 +35,7 @@ class _CategoriaState extends State<Categoria> {
           selectedIndex = index;
         });
         if (selectedIndex == 1) {
-          Navigator.pushNamed(context, '/eliminarProd');
+          Navigator.pushNamed(context, '/usuarios');
         }
       },
       child: Padding(

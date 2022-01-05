@@ -19,7 +19,7 @@ class Body extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: size.height * 0.3),
                   height: 500,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(24),
@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                   child: Column(
                     children: <Widget>[
-                      Text(
+                      const Text(
                         "Un zapato perrón",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -44,7 +44,7 @@ class Body extends StatelessWidget {
                         children: <Widget>[
                           RichText(
                               text: TextSpan(children: [
-                            TextSpan(text: "Precio\n"),
+                            const TextSpan(text: "Precio\n"),
                             TextSpan(
                                 text: "\$${producto.precio}",
                                 style: Theme.of(context)
@@ -54,7 +54,7 @@ class Body extends StatelessWidget {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold))
                           ])),
-                          SizedBox(
+                          const SizedBox(
                             width: kDefaultPadding,
                           ),
                           Expanded(

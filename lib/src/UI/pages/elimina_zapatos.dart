@@ -1,78 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:prueba/src/Backend/BaseDatos.dart';
-import 'package:prueba/src/Backend/Producto_model.dart';
-import 'package:prueba/src/UI/constants.dart';
+import 'package:prueba/src/Backend/usuario_model.dart';
 
-class EliminaZapatos extends StatelessWidget {
-  EliminaZapatos({Key? key}) : super(key: key);
+class EliminaZapatos extends StatefulWidget {
+  const EliminaZapatos({Key? key}) : super(key: key);
+
+  @override
+  State<EliminaZapatos> createState() => _EliminaZapatosState();
+}
+
+class _EliminaZapatosState extends State<EliminaZapatos> {
   double iconSize = 40;
+  List<Usuario>? usuarios;
+
+  Future showAlert(BuildContext context, Usuario user) async {
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          elevation: 5,
+          title: const Text('Editar o eliminar'),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Text('Editar o eliminar un usuario'),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  'Editar',
+                  style: TextStyle(color: Colors.red),
+                )),
+            TextButton(
+                onPressed: () async {
+                  await Backend.deleteUser(user);
+                  Navigator.pop(context);
+                  setState(() {});
+                },
+                child: const Text(
+                  'Eliminar',
+                  style: TextStyle(color: Colors.red),
+                ))
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Backend.productos(),
+      future: Backend.getUsuarios(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                 '${snapshot.error} occured',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             );
           } else if (snapshot.hasData) {
-            print("Cambiando de pantalla");
-            List<Producto>? productos = snapshot.data as List<Producto>?;
-            if (productos!.isNotEmpty) {
-              return Expanded(
-                  child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                child: Table(),
-              ));
+            usuarios = snapshot.data as List<Usuario>?;
+            if (usuarios!.isNotEmpty) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Usuarios'),
+                ),
+                body: ListView.separated(
+                  itemCount: usuarios!.length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(usuarios![index].email ?? ''),
+                    onTap: () {
+                      showAlert(context, usuarios![index]);
+                    },
+                  ),
+                  separatorBuilder: (_, __) => const Divider(),
+                ),
+              );
             }
-            return Scaffold(
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                title: Text("Eliminar producto"),
-                backgroundColor: productColor,
-              ),
-              body: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: Table(
-                      border: TableBorder.all(),
-                      children: [
-                        TableRow(children: [
-                          Column(children: [
-                            Icon(
-                              Icons.account_box,
-                              size: iconSize,
-                            ),
-                            Text('Nombre')
-                          ]),
-                          Column(children: [
-                            Icon(
-                              Icons.settings,
-                              size: iconSize,
-                            ),
-                            Text('imagen')
-                          ]),
-                          Column(children: [
-                            Icon(
-                              Icons.lightbulb_outline,
-                              size: iconSize,
-                            ),
-                            Text('Precio')
-                          ]),
-                        ]),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
           }
         }
         return const Center(

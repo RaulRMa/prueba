@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:prueba/src/Backend/BaseDatos.dart';
 import 'package:prueba/src/Backend/usuario_model.dart';
 import 'package:prueba/src/UI/components/inputs.dart';
-import 'package:prueba/src/UI/pages/home_page.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Registrar extends StatelessWidget {
   final email = TextEditingController();

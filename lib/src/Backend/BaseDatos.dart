@@ -58,7 +58,6 @@ class Backend {
         usuario.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-      print("Este es el resultado: $result");
       db.close();
       return result;
     } catch (e) {
@@ -79,22 +78,28 @@ class Backend {
       return List.generate(usuariosMap.length, (i) {
         return Usuario(
             email: usuariosMap[i]["email"],
-            contrasena: usuariosMap[i]["contrasena"]);
+            contrasena: usuariosMap[i]["contrasena"],
+            id: usuariosMap[i]["Id"]);
       });
     } catch (e) {
       return null;
     }
   }
 
+  static Future<int> deleteUser(Usuario user) async {
+    Database db = await _openDB();
+    return await db.delete("Usuarios2", where: "Id=?", whereArgs: [user.id]);
+  }
+
   static Future<int> delete(Producto prod) async {
     Database db = await _openDB();
-    return db.delete("Productos", where: "id: ?", whereArgs: [prod.id]);
+    return db.delete("Productos4", where: "Id=?", whereArgs: [prod.id]);
   }
 
   static Future<int> update(Producto prod) async {
     Database db = await _openDB();
-    return db.update("Productos", prod.toMap(),
-        where: "id: ?", whereArgs: [prod.id]);
+    return db.update("Productos4", prod.toMap(),
+        where: "Id=?", whereArgs: [prod.id]);
   }
 
   static Future<List<Producto>?> productos() async {

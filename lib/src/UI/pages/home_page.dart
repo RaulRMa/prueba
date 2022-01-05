@@ -10,7 +10,6 @@ class HomePage extends StatelessWidget {
   final icon_path = 'lib/src/assets/icons/';
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -33,14 +32,26 @@ class HomePage extends StatelessWidget {
           SizedBox(width: kDefaultPadding / 2),
         ],
       ),
-      body: Body(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => RegistraProducto()));
-        },
+      body: const Body(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/registrarProd');
+            },
+          )
+        ],
       ),
     );
   }
 }
+
+/*
+onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RegistraProducto()));
+        },
+
+        */

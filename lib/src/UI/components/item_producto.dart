@@ -6,8 +6,9 @@ class ItemProducto extends StatelessWidget {
   final Producto producto_item;
   final VoidCallback presionado;
 
-  const ItemProducto({required this.producto_item, required this.presionado})
-      : super();
+  const ItemProducto(
+      {Key? key, required this.producto_item, required this.presionado})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,7 @@ class ItemProducto extends StatelessWidget {
                   color: productColor,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Hero(
-                  tag: Object(),
-                  child: Image.network(producto_item.imagen),
-                )),
+                child: Image.network(producto_item.imagen)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),

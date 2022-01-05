@@ -4,8 +4,9 @@ import 'package:meta/meta.dart';
 class Usuario extends Equatable {
   final String? email;
   final String? contrasena;
+  final int? id;
 
-  const Usuario({this.email, this.contrasena}) : assert(email != null);
+  const Usuario({this.id, this.email, this.contrasena}) : assert(email != null);
 
   //static const empty = Usuario(email: '', pass1 '', pass2: '');
 
@@ -22,6 +23,6 @@ class Usuario extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    return {'email': email, 'contrasena': contrasena};
+    return {'email': email, 'contrasena': contrasena, 'id': id};
   }
 }

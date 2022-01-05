@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/Registrar': (context) => Registrar(),
         '/catalogo': (context) => HomePage(),
         '/registrarProd': (context) => RegistraProducto(),
-        '/eliminarProd': (context) => EliminaZapatos(),
+        '/usuarios': (context) => const EliminaZapatos(),
         //'/Administrar': (context) => Administrar(),
       },
     );
